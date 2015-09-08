@@ -2,6 +2,10 @@
     clear:both;
 }
 
+.current_hand{
+    float:left;
+}
+
 #my_hand{
     clear:both;
     border: 1px solid gray;
@@ -15,5 +19,11 @@ h3{
 }
 
 .current-hand{
+    float:left;
+}
+
+#btnHit, #btnStick,
+#btnRestart{
+    display:none;
     float:left;
 }

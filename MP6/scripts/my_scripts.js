@@ -62,9 +62,17 @@ $(document).ready(function(){
         new card('King', 'Spades',10)
     ]
     var hand = {
-        cards: new Array(),
-        current_total: 0
-    }
+        cards : new Array(),
+        current_total : 0,
+
+        sumCardTotal: function(){
+            this.current_total = 0;
+            for(var i;i < this.cards.length; i++){
+                current_total += this.cards[i].value;
+            }
+            $("#hdrTotal").html("Total: " + this.current_total);
+        }
+    };
 
     var used_cards = new Array();
 
@@ -88,11 +96,13 @@ $(document).ready(function(){
                 var c = deck[ index ];
                 used_cards[used_cards.length] = index;
                 hand.cards[hand.cards.length] = c;
-                var $d = $("div");
-                $d.addClass("current_hand").appendTo("#my_hand");
-                $("<img>").appendTo($d)
-                    .attr('src','images/cards/' + c.suit + '/' + c.name + '.jpg')
-                    .fadeout('slow')
+                var $d = $("<div>");
+                $d.addClass("current_hand")
+                    .appendTo("#my_hand");
+                $("<img>")
+                    .attr('src', 'images/cards/' + c.suit + '/' + c.name + '.jpg' )
+                    .appendTo($d)
+                    .fadeOut('slow')
                     .fadeIn('slow');
             }
         }while(!good_card);
