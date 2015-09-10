@@ -10,12 +10,37 @@ $(document).ready(function(){
     function startAJAXcalls(){
         if (repeat) {
             setTimeout(function () {
-                    getXmlRacers();
+                    getDBRacers();
                     startAJAXcalls();
                 },
                 FREQ
             );
         }
+    }
+
+    function getDBRacers(){
+        $.getJSON("service.php", function(json) {
+            if (json.runners.length > 0) {
+                $('#finishers_m').empty();
+                $('#finishers_f').empty();
+                $('#finishers_all').empty();
+
+                $.each(json.runners,function() {
+                    var info = '<li>Name: ' +  this['fname'] + ' ' +  this['lname'] + '. Time: ' +  this['time'] + '</li>';
+                    if(this['gender'] == 'm'){
+                        $('#finishers_m').append( info );
+                    }else if(this['gender'] == 'f'){
+                        $('#finishers_f').append( info );
+                    }else{}
+                    $('#finishers_all').append( info );
+                });
+            }
+        });
+        //$.getJSON("service.php", function(json){
+        //    alert(json.runners.length);
+        //
+        //});
+        getTimeAjax();
     }
 
     function getXmlRacers(){
@@ -93,7 +118,7 @@ $(document).ready(function(){
     });
 
     showFrequency();
-    getXmlRacers();
+    getDBRacers();
     startAJAXcalls();
 
 });
