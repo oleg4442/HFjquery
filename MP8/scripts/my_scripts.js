@@ -67,20 +67,22 @@ $(document).ready(function(){
         showFrequency();
     })
 
-    $('btnSave').click(function(){
-        var data = $("#addRunnder :input").serializeArray();
-        $.post($("#addRunner:input").attr('action'),data,function(json){
-            if(json.status == "fail"){
+    $('#btnSave').click(function() {
+
+        var data = $("#addRunner :input").serializeArray();
+
+        $.post($("#addRunner").attr('action'), data, function(json){
+            if (json.status == "fail") {
                 alert(json.message);
             }
-            if (json.status == "success"){
+            if (json.status == "success") {
                 alert(json.message);
                 clearInputs();
             }
         }, "json");
     });
 
-    function clearInputs{
+    function clearInputs(){
         $("#addRunner:input").each(function(){
             $(this).val('');
         });
