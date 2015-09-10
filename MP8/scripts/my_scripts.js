@@ -19,23 +19,33 @@ $(document).ready(function(){
     }
 
     function getDBRacers(){
-        $.getJSON("service.php", function(json) {
-            if (json.runners.length > 0) {
-                $('#finishers_m').empty();
-                $('#finishers_f').empty();
-                $('#finishers_all').empty();
+        //$.getJSON("service.php?action =getRunners", function(json) {  }
 
-                $.each(json.runners,function() {
-                    var info = '<li>Name: ' +  this['fname'] + ' ' +  this['lname'] + '. Time: ' +  this['time'] + '</li>';
-                    if(this['gender'] == 'm'){
-                        $('#finishers_m').append( info );
-                    }else if(this['gender'] == 'f'){
-                        $('#finishers_f').append( info );
-                    }else{}
-                    $('#finishers_all').append( info );
-                });
+        $.ajax({
+            url: "service.php?action =getRunners",
+            type: "GET",
+            dataType: "json",
+            data: "json",
+            success: function(json){
+                if (json.runners.length > 0) {
+                    $('#finishers_m').empty();
+                    $('#finishers_f').empty();
+                    $('#finishers_all').empty();
+
+                    $.each(json.runners, function () {
+                        var info = '<li>Name: ' + this['fname'] + ' ' + this['lname'] + '. Time: ' + this['time'] + '</li>';
+                        if (this['gender'] == 'm') {
+                            $('#finishers_m').append(info);
+                        } else if (this['gender'] == 'f') {
+                            $('#finishers_f').append(info);
+                        } else {
+                        }
+                        $('#finishers_all').append(info);
+                    });
+                }
             }
         });
+
         //$.getJSON("service.php", function(json){
         //    alert(json.runners.length);
         //
@@ -92,19 +102,37 @@ $(document).ready(function(){
         showFrequency();
     })
 
-    $('#btnSave').click(function() {
+    $("#btnSave").click(function() {
+        event.preventDefault();
 
         var data = $("#addRunner :input").serializeArray();
 
-        $.post($("#addRunner").attr('action'), data, function(json){
-            if (json.status == "fail") {
-                alert(json.message);
+        $.ajax({
+            url: "service.php?action=getRunners",
+            type: "POST",
+            dataType: "json",
+            data: "json",
+            success: function (json) {
+                if (json.status == "fail") {
+                    alert(json.message);
+                }
+                if (json.status == "success") {
+                    alert(json.message);
+                    clearInputs();
+                }
             }
-            if (json.status == "success") {
-                alert(json.message);
-                clearInputs();
-            }
-        }, "json");
+        });
+
+        //$.post($("#addRunner").attr("action"), data, function(json){
+		//
+        //    if (json.status == "fail") {
+        //        alert(json.message);
+        //    }
+        //    if (json.status == "success") {
+        //        alert(json.message);
+        //        clearInputs();
+        //    }
+        //}, "json");
     });
 
     function clearInputs(){
