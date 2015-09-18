@@ -42,3 +42,9 @@ body{
   height: 300px ;
 }
 #main div a { color:#000; font-weight:bold; }
+
+#main div table,th,td {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse
+}

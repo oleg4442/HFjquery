@@ -1,6 +1,22 @@
-$(document).ready(function(){
+$(document).ready(function(){	
+	getXmlFG();
 
-    var repeat = true;
+	function getXmlFG(){
+        $.ajax({
+            url: "fg.xml",
+            cache: false,
+            dataType: "xml",
+            success:  function(xml){
+                $('#feed_group').empty();
+                $(xml).find("row").each(function(){
+                    var info = '<li>FG Code: ' + $(this).attr("GROUP_CODE") + ',  FG Name: ' 
+						+ $(this).attr("GROUP_NAME") + ',  FG Description: ' + $(this).attr("GROUP_DESC") + '</li>';						
+                    $('#feed_group').append(info);
+                });
+            }
+        });
+    }
+/**    var repeat = true;
     var FREQ = 10000;
 
     function showFrequency(){
@@ -136,6 +152,6 @@ $(document).ready(function(){
 
     showFrequency();
     getDBRacers();
-    startAJAXcalls();
+    startAJAXcalls();*/
 
 });

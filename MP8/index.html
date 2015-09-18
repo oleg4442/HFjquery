@@ -23,9 +23,23 @@
                 <h4>Female Finishers</h4>
                 <ul id="finishers_f"></ul>
             </div>
-            <div id="finishers"> 
+            <div id="finishers">
                 <h4>All Finishers</h4>
+                <table className="table table-bordered">
+                    <thead>
+                    <tr key="head">
+                        <th>Group Code</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {rows}
+                    </tbody>
+                </table>
 				<ul id="finishers_all"></ul>
+
             </div>
             <div id="new">
                 <h4>Add New Finisher</h4>
