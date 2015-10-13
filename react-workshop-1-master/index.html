@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React JS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <script src="react-with-addons.min.js"></script>
+    <script src="JSXTransformer.js"></script>
+  </head>
+  <body>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+
+      var Calculator = React.createClass({
+        getInitialState: function(){
+          return {
+            items: [
+              {id: 1, name: "MacBook Air", date: "14.07.2014", amount: -20000}
+            ]
+          };
+        },
+
+        handleAdd: function(name, date, amount) {
+          if(name === "" || date === "" || amount === "") {
+            return false;
+          }
+
+          var newItem = {id: this.state.items.length + 1, name: name, date: date, amount: amount};
+          var newState = React.addons.update(this.state, {
+            items: {$push: [newItem]}
+          });
+          
+          this.setState(newState);
+        },
+
+        componentDidMount: function(){
+          // alert("Hello!");
+        },
+
+        render: function(){
+          return(
+            <div className="container">
+              <h1>Калькулятор</h1>
+              <div className="panel panel-default">
+                <div className="panel-body">
+                  <InputForm addItem={this.handleAdd} />
+                </div>
+              </div>
+
+              <Table items={this.state.items} />
+            </div>
+          );
+        }
+      });
+
+      var Table = React.createClass({
+        render: function(){
+          var total = 0;
+
+          var rows = this.props.items.map(function(item){
+            total += item.amount;
+            return <TableRow key={item.id} name={item.name} date={item.date} amount={item.amount} />
+          });
+
+          return(
+            <table className="table table-bordered">
+              <thead>
+                <tr key="head">
+                  <th>Название</th>
+                  <th>Дата</th>
+                  <th>Деньги</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {rows}
+
+                <tr className="info" key="total">
+                  <th>Итого</th>
+                  <th></th>
+                  <th>{total}</th>
+                </tr>
+              </tbody>
+            </table>
+          );
+        }
+      });
+
+      var TableRow = React.createClass({
+        render: function() {
+          var classes = React.addons.classSet({
+            'danger': this.props.amount < -10000
+          });
+
+          return(
+            <tr className={classes}>
+              <td>{this.props.name}</td>
+              <td>{this.props.date}</td>
+              <td>{this.props.amount}</td>
+            </tr>
+          );
+        }
+      });
+
+      var InputForm = React.createClass({
+        getInitialState: function() {
+          return {name: "", date: "", amount: ""}
+        },
+        handleSubmit: function(e) {
+          e.preventDefault();
+          this.props.addItem(this.state.name, this.state.date, this.state.amount);
+        },
+        handleNameChange: function(e) {
+          this.setState({name: e.target.value});
+        },
+        handleDateChange: function(e) {
+          var val = e.target.value;
+          
+          valid_date = /^\d{1,2}$/.test(val) || 
+                       /^\d{2}\.$/.test(val) || 
+                       /^\d{2}\.\d{1,2}$/.test(val) || 
+                       /^\d{2}\.\d{2}\.$/.test(val) || 
+                       /^\d{2}\.\d{2}\.\d{1,4}$/.test(val);
+
+          if(valid_date){
+            this.setState({date: val});  
+          }
+        },
+        handleAmountChange: function(e) {
+          this.setState({amount: parseInt(e.target.value, 10)});
+        },
+        render: function() {
+          return(
+            <form className="form-inline" onSubmit={this.handleSubmit} role="form">
+              <div className="form-group">
+                <input className="form-control" 
+                       type="text" 
+                       name="name" 
+                       placeholder="Name"
+                       value={this.state.name} 
+                       onChange={this.handleNameChange} />
+              </div>
+              <div className="form-group">
+                <input className="form-control" 
+                       type="text" 
+                       name="date" 
+                       value={this.state.date} 
+                       placeholder="Date"
+                       onChange={this.handleDateChange} />
+              </div>
+              <div className="form-group">
+              <input className="form-control" 
+                     type="text" 
+                     name="amount" 
+                     value={this.state.amount} 
+                     placeholder="Amount"
+                     onChange={this.handleAmountChange} />
+              </div>
+
+              <button className="btn btn-primary">Add</button>
+            </form>
+          );
+        }
+      });
+
+      React.renderComponent(
+        <Calculator />,
+        document.body
+      );
+    </script>
+
+  </body>
+</html>
