@@ -1,6 +1,4 @@
-var ReactBSTable = require("react-bootstrap-table");
-var BootstrapTable = ReactBSTable.BootstrapTable;
-var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
+
 // products will be presented by reactbsTable
 var products = [
 	{
@@ -31,14 +29,17 @@ var products = [
 ];
 // It's a data format example.
 function priceFormatter(cell, row){
-	return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
+	return '<i class="glyphicon glyphicon-usd"></i>' + cell;
 }
 
 React.render(
-	<BootstrapTable data={products} height="120" striped={true} hover={true}>
-		<TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
-		<TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
-		<TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
-	</BootstrapTable>,
-	document.getElementById("basic")
+	<div>
+		
+		<BootstrapTable data={products} height="120" striped={true} hover={true}>
+			<TableHeaderColumn dataField="id" isKey={true} dataAlign="center" dataSort={true}>Product ID</TableHeaderColumn>
+			<TableHeaderColumn dataField="name" dataSort={true}>Product Name</TableHeaderColumn>
+			<TableHeaderColumn dataField="price" dataFormat={priceFormatter}>Product Price</TableHeaderColumn>
+		</BootstrapTable>
+	</div>,
+	document.getElementById("example")
 );
