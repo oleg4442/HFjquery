@@ -16,12 +16,22 @@
     },
     {
         "code": "fg4",
-        "name": "fg4",
-        "desc": "fg4"
+        "name": "fg",
+        "desc": "fg"
     },
     {
-        "code": "qw",
-        "name": "qweq",
-        "desc": "qwe"
+        "code": "fg5",
+        "name": "fg",
+        "desc": "fg"
+    },
+    {
+        "code": "fg5",
+        "name": "fg",
+        "desc": "fg"
+    },
+    {
+        "code": "fg6",
+        "name": "fg",
+        "desc": "fg"
     }
 ]
