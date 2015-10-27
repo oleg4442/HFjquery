@@ -1,10 +1,3 @@
-var Item = React.createClass({
-	render: function () {
-		return (
-			<li>{this.props.code} {this.props.name} {this.props.desc}</li>
-		)
-	}
-})
 var GroupObject = Parse.Object.extend("ERFGROUP");;
 
 var MyComponent = React.createClass({
@@ -40,57 +33,30 @@ var MyComponent = React.createClass({
 	},
 
 	loadFromParse: function(){
-		const data = this.state.data;
+		var dataRows = this.state.data;
 		var query = new Parse.Query(GroupObject);
 		query.find({
 			success: function(results){
-				var dataRows = data;
-				var newDataRows;
+				var newDataRows = [];
 				for (var i in results){
 					var code = results[i].get("Code");
 					var name = results[i].get("Name");
 					var desc = results[i].get("Desc");
-					newDataRows = dataRows.concat({code:code,name:name,desc:desc});
+					newDataRows = newDataRows.concat({code:code,name:name,desc:desc});
 					console.log("FG CODE: " + code);
 				}
 				this.setState({data: newDataRows});
-				//this.setState({data: results});
-			}.bind(this),error: function(error){
+			}.bind(this),
+			error: function(error){
 				console.log("Query Error:" + error.message)
 		````}
 		});
-		//this.setState({data:data});
 	},
 
-	//loadFromServer: function() {
-	//	$.ajax({
-	//		url: this.props.url,
-	//		dataType: 'json',
-	//		cache: false,
-	//		success: function(data) {
-	//			this.setState({data: data});
-	//		}.bind(this),
-	//		error: function(xhr, status, err) {
-	//			console.error(this.props.url, status, err.toString());
-	//		}.bind(this)
-	//	});
-	//},
 	handleSubmit: function(row) {
 		var dataRows = this.state.data;
 		var newDataRows = dataRows.concat([row]);
 		this.setState({data: newDataRows});
-		$.ajax({
-			url: this.props.url,
-			dataType: 'json',
-			type: 'POST',
-			data: row,
-			success: function(data) {
-				//this.setState({data: data});
-			}.bind(this),
-			error: function(xhr, status, err) {
-				console.error(this.props.url, status, err.toString());
-			}.bind(this)
-		});
 	},
 	componentWillMount: function() {
 		Parse.initialize("RLodcdOxlKYYPTmLZ4sofv3M5R3XKG7d7qZE6XBe", "IoKsmB6f7HbdvkzXLpCHn2JbYrqjMev7HTFYaq4r");
@@ -98,28 +64,9 @@ var MyComponent = React.createClass({
 		this.loadFromParse();
 		//setInterval(this.loadCommentsFromServer, this.props.pollInterval);
 	},
-	//render: function () {
-	//	const data = this.state.data;
-	//	return (
-	//		<div>
-	//			<input type="input" placeholder = "Type fg code" ref="fCode"/>
-	//			<input type="input" placeholder = "Feed group name " ref="fName"/>
-	//			<input type="input" placeholder = "Description" ref="fDesc"/>
-	//			<input type = "button" value = "Submit" onClick = {this.handleOnClick}/>
-	//			<ul>
-	//				{data.map(function(item){
-	//					return <Item code ={item.code} name ={item.name} desc ={item.desc}/>
-	//				})}
-	//			</ul>
-	//		</div>
-	//	)
-	//}
 
 	render: function () {
 		const data = this.state.data;
-
-
-
 
 		return(
 			<div>
@@ -140,5 +87,5 @@ var MyComponent = React.createClass({
 })
 
 React.render(
-	<MyComponent url = "fg.json"/>, document.getElementById("example")
+	<MyComponent/>, document.getElementById("example")
 );
