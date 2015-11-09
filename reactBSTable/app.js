@@ -1,4 +1,4 @@
-var GroupObject = Parse.Object.extend("ERFGROUP");;
+var GroupObject = Parse.Object.extend("ERFGROUP");
 
 var MyComponent = React.createClass({
 
@@ -19,8 +19,7 @@ var MyComponent = React.createClass({
 
 		var groupObject = new GroupObject();
 		groupObject.save({Code: code,Name: name, Desc: desc}, {
-			success: function(object) {
-				$(".success").show();
+			success: function() {
 			},
 			error: function(model, error) {
 				console.log("Error:" + error.message );
@@ -33,7 +32,6 @@ var MyComponent = React.createClass({
 	},
 
 	loadFromParse: function(){
-		var dataRows = this.state.data;
 		var query = new Parse.Query(GroupObject);
 		query.find({
 			success: function(results){
@@ -64,7 +62,6 @@ var MyComponent = React.createClass({
 		this.loadFromParse();
 		//setInterval(this.loadCommentsFromServer, this.props.pollInterval);
 	},
-
 	render: function () {
 		const data = this.state.data;
 
@@ -84,7 +81,7 @@ var MyComponent = React.createClass({
 			</div>
 		)
 	}
-})
+});
 
 React.render(
 	<MyComponent/>, document.getElementById("example")
