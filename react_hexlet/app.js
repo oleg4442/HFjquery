@@ -1,6 +1,3 @@
-/**
- * Created by onaydin on 10/13/2015.
- */
 var Item = React.createClass({
 	render: function () {
 		return (

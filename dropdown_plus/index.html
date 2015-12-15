@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="demo.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<ul class = "ul-dropfree">
+    <li>Древовидный список;
+        <ul>
+            <li>У каждого элемента списка есть родитель, кроме элементов первого уровня;</li>
+            <li>Каждый следующий уровень вложенности смещается внутрь на фиксированное расстояние; </li>
+            <li>Наличие соединяющих линий;
+                <ul>
+                    <li>Все элементы &bdquo;братья&ldquo; должны соединяться линией;</li>
+                    <li>Все элементы &bdquo;дети&ldquo; должны соединяться линией с родителем;</li>
+                </ul>
+            </li>
+            <li>Элементы древовидного списка не должны иметь фоновую заливку для возможности отображения списка над любым градиентным фоном;</li>
+        </ul>
+    </li>
+    <li>Раскрывающийся древовидный список;
+        <ul>
+            <li>Все то же что и у простого древовидного списка;</li>
+            <li>Наличие управляющих кнопок &bdquo;плюсиков&ldquo;;
+                <ul>
+                    <li>Каждый элемент являющийся родителем слева от себя должен иметь управляющую кнопку &bdquo;плюсик&ldquo;;</li>
+                    <li>При нажатии на эту кнопку дочерние элементы показываются, а кнопка приобретает вид минуса, при повторном нажатии дочернии элементы скрываются, кнопка приобретает свой первоначальный вид.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<script>
+    $(".ul-dropfree").find("li:has(ul)").prepend('<div class="drop"></div>');
+    $(".ul-dropfree div.drop").click(function() {
+        if ($(this).nextAll("ul").css('display')=='none') {
+            $(this).nextAll("ul").slideDown(400);
+            $(this).css({'background-position':"-11px 0"});
+        } else {
+            $(this).nextAll("ul").slideUp(400);
+            $(this).css({'background-position':"0 0"});
+        }
+    });
+    $(".ul-dropfree").find("ul").slideUp(400).parents("li").children("div.drop").css({'background-position':"0 0"});
+</script>
+</body>
+</html>

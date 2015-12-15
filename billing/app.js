@@ -97,7 +97,6 @@ var MyComponent = React.createClass({
 		this.loadFromParse();
 	},
 
-
 	handleOnClick: function(e) {
 		e.preventDefault();
 		const staff = parseInt(React.findDOMNode(this.refs.person).value.trim());
